@@ -32,6 +32,16 @@ pipeline {
                 bat "docker --version"
             }
         }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    bat 'docker rm -f library-ms-app || exit 0'
+                    bat 'docker build -t library-app .'
+                    bat 'docker run -d --name library-ms-app -p 5001:5000 library-app'
+                }
+            }
+        }
     }
 
     post {
